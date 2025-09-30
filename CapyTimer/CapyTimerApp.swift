@@ -22,7 +22,11 @@ struct CapyTimerApp: App {
                 .frame(width: 320, height: 420)
                 .padding()
         } label: {
-            Label("\(formatTime(timerManager.remainingTime))", systemImage: "timer")
+            HStack(spacing: 6) {
+                Image(systemName: "timer")
+                Text("\(formatTime(timerManager.remainingTime))")
+                    .font(.system(.body, design: .monospaced))
+            }
         }
         .menuBarExtraStyle(.window)
     }
