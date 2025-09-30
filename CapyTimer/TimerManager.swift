@@ -7,11 +7,13 @@
 
 import Foundation
 import UserNotifications
+import AVFoundation
 
 class TimerManager: ObservableObject {
     @Published var remainingTime: Int = 25 * 60
     @Published var isRunning = false
     private var timer: Timer?
+    private var audioPlayer: AVAudioPlayer?   // Keep a reference to the player
 
     var focusDuration = 25 * 60
     var breakDuration = 5 * 60
@@ -28,6 +30,7 @@ class TimerManager: ObservableObject {
                     title: "Pomodoro Finished",
                     body: "Time for a break!"
                 )
+                self.playSound()
             }
         }
     }
@@ -41,5 +44,19 @@ class TimerManager: ObservableObject {
     func reset(to focus: Bool = true) {
         stop()
         remainingTime = focus ? focusDuration : breakDuration
+    }
+
+    // MARK: - Play Sound
+    private func playSound() {
+        guard let url = Bundle.main.url(forResource: "capysound", withExtension: "wav") else {
+            print("⚠️ Could not find capysound.mp3 in the app bundle")
+            return
+        }
+        do {
+            audioPlayer = try AVAudioPlayer(contentsOf: url)
+            audioPlayer?.play()
+        } catch {
+            print("⚠️ Failed to play sound: \(error.localizedDescription)")
+        }
     }
 }
