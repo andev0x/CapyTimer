@@ -1,0 +1,54 @@
+name: Build and Release
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+
+jobs:
+  build:
+    runs-on: macos-latest
+
+    steps:
+      # Checkout source code
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      # Select latest Xcode
+      - name: Set up Xcode
+        run: sudo xcode-select -s /Applications/Xcode.app
+
+      # Build and archive app
+      - name: Build App
+        run: |
+          mkdir -p build
+          xcodebuild -scheme CapyTimer \
+            -configuration Release \
+            -archivePath build/CapyTimer.xcarchive archive
+
+          xcodebuild -exportArchive \
+            -archivePath build/CapyTimer.xcarchive \
+            -exportOptionsPlist ExportOptions.plist \
+            -exportPath build
+
+      # Create DMG file
+      - name: Create DMG
+        run: |
+          brew install create-dmg
+          create-dmg \
+            --volname "CapyTimer" \
+            --window-pos 200 120 \
+            --window-size 600 400 \
+            --icon-size 100 \
+            --icon "CapyTimer.app" 150 150 \
+            --app-drop-link 450 150 \
+            build/CapyTimer.dmg \
+            build/CapyTimer.app
+
+      # Upload to GitHub Release
+      - name: Upload Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: build/CapyTimer.dmg
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
