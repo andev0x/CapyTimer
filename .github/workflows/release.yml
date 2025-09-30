@@ -2,8 +2,6 @@ name: Build and Release
 
 on:
   push:
-    branches:
-      - main
     tags:
       - "v*.*.*"
 
@@ -12,45 +10,34 @@ jobs:
     runs-on: macos-latest
 
     steps:
-      # Checkout source code
-      - name: Checkout
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
-      # Select latest Xcode
-      - name: Set up Xcode
-        run: sudo xcode-select -s /Applications/Xcode.app
-
-      # Build and archive app
-      - name: Build App
+      - name: Build App (unsigned)
         run: |
-          mkdir -p build
           xcodebuild -scheme CapyTimer \
             -configuration Release \
-            -archivePath build/CapyTimer.xcarchive archive
+            -derivedDataPath build \
+            CODE_SIGN_IDENTITY="" \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGNING_ALLOWED=NO \
+            build
+          mkdir -p build/Release
+          cp -R build/Build/Products/Release/CapyTimer.app build/Release/
 
-          xcodebuild -exportArchive \
-            -archivePath build/CapyTimer.xcarchive \
-            -exportOptionsPlist ExportOptions.plist \
-            -exportPath build
-
-      # Create DMG file
       - name: Create DMG
         run: |
           brew install create-dmg
-          create-dmg \
-            --volname "CapyTimer" \
+          create-dmg --volname "CapyTimer" \
             --window-pos 200 120 \
             --window-size 600 400 \
             --icon-size 100 \
-            --icon "CapyTimer.app" 150 150 \
-            --app-drop-link 450 150 \
+            --icon "CapyTimer.app" 200 190 \
+            --hide-extension "CapyTimer.app" \
+            --app-drop-link 400 190 \
             build/CapyTimer.dmg \
-            build/CapyTimer.app
+            build/Release/
 
-      # Upload to GitHub Release
       - name: Upload Release
         uses: softprops/action-gh-release@v1
         with:
           files: build/CapyTimer.dmg
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
