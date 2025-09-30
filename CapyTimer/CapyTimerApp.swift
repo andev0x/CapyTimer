@@ -14,11 +14,23 @@ struct CapyTimerApp: App {
     @StateObject private var notesManager = NotesManager()
     
     var body: some Scene {
-        MenuBarExtra("CapyTimer", systemImage: "timer") {
+        MenuBarExtra {
             ContentView()
                 .environmentObject(timerManager)
                 .environmentObject(todoManager)
                 .environmentObject(notesManager)
+                .frame(width: 320, height: 420)
+                .padding()
+        } label: {
+            Label("\(formatTime(timerManager.remainingTime))", systemImage: "timer")
         }
+        .menuBarExtraStyle(.window)
     }
+}
+
+// MARK: - Time Formatter
+func formatTime(_ seconds: Int) -> String {
+    let minutes = seconds / 60
+    let secs = seconds % 60
+    return String(format: "%02d:%02d", minutes, secs)
 }
