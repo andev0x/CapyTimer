@@ -1,6 +1,32 @@
+<p align="center">
+  <img src="https://raw.githubusercontent.com/andev0x/description-image-archive/refs/heads/main/capy-timer/capytimerapp.png" width="200" />
+</p>
+
+<p align="center">
+  <a href="https://github.com/andev0x/CapyTimer/releases/latest">
+    <img src="https://img.shields.io/github/v/release/andev0x/CapyTimer?color=blue&label=Download&logo=apple&logoColor=white" />
+  </a>
+  <a href="https://github.com/andev0x/CapyTimer/stargazers">
+    <img src="https://img.shields.io/github/stars/andev0x/CapyTimer?style=social" />
+  </a>
+  <a href="https://github.com/andev0x/CapyTimer/fork">
+    <img src="https://img.shields.io/github/forks/andev0x/CapyTimer?style=social" />
+  </a>
+</p>
+
+----
+
+
+
 ## CapyTimer (macOS Menu Bar Pomodoro + Todos + Notes)
 
 CapyTimer is a lightweight macOS menu bar app built with SwiftUI. It combines a Pomodoro timer with a simple todo list and quick notes, designed for focus and flow.
+
+### Demo
+
+
+<img src="https://github.com/andev0x/description-image-archive/blob/main/capy-timer/capy-timer-icon.gif?raw=true" />
+
 
 ### Features
 - Pomodoro timer with configurable focus and break durations
@@ -50,6 +76,11 @@ CapyTimer/
 
 ### Contributing
 PRs welcome. Keep code clear and consistent with existing SwiftUI style. Prefer reusable components in `CapyTheme.swift`.
+
+### 📥 Installation
+1. Go to [Latest Release](https://github.com/andev0x/CapyTimer/releases/latest).
+2. Download the `.dmg` file.
+3. Drag **CapyTimer.app** into your Applications folder.
 
 ### License
 MIT
