@@ -13,38 +13,47 @@ struct SettingsView: View {
     @State private var breakMinutes: String = ""
     
     var body: some View {
-        VStack(alignment: .leading) {
-            Text("Settings")
-                .font(.headline)
-            
+        VStack(alignment: .leading, spacing: 8) {
             HStack {
-                Text("Focus (minutes):")
-                TextField("", text: $focusMinutes)
-                    .frame(width: 50)
-                    .textFieldStyle(.roundedBorder)
+                Text("Focus (min)")
+                    .frame(width: 90, alignment: .leading)
+                TextField("25", text: $focusMinutes)
+                    .frame(width: 60)
+                    .textFieldStyle(CompactTextFieldStyle())
             }
-            
             HStack {
-                Text("Break (minutes):")
-                TextField("", text: $breakMinutes)
-                    .frame(width: 50)
-                    .textFieldStyle(.roundedBorder)
+                Text("Break (min)")
+                    .frame(width: 90, alignment: .leading)
+                TextField("5", text: $breakMinutes)
+                    .frame(width: 60)
+                    .textFieldStyle(CompactTextFieldStyle())
             }
-            
-            Button("Save") {
-                if let f = Int(focusMinutes) {
-                    timerManager.focusDuration = f * 60
-                }
-                if let b = Int(breakMinutes) {
-                    timerManager.breakDuration = b * 60
-                }
-                timerManager.reset()
+            HStack(spacing: 8) {
+                Button("Save") { save() }
+                    .buttonStyle(.borderedProminent)
+                Button("Reset Defaults") { resetDefaults() }
+                    .buttonStyle(.bordered)
             }
-            .padding(.top, 5)
+            .padding(.top, 4)
         }
-        .onAppear {
-            focusMinutes = String(timerManager.focusDuration / 60)
-            breakMinutes = String(timerManager.breakDuration / 60)
-        }
+        .onAppear(perform: load)
+    }
+    
+    private func load() {
+        focusMinutes = String(timerManager.focusDuration / 60)
+        breakMinutes = String(timerManager.breakDuration / 60)
+    }
+    
+    private func save() {
+        if let f = Int(focusMinutes) { timerManager.focusDuration = max(1, f) * 60 }
+        if let b = Int(breakMinutes) { timerManager.breakDuration = max(1, b) * 60 }
+        timerManager.reset()
+    }
+    
+    private func resetDefaults() {
+        timerManager.focusDuration = 25 * 60
+        timerManager.breakDuration = 5 * 60
+        load()
+        timerManager.reset()
     }
 }

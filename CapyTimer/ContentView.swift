@@ -14,41 +14,54 @@ struct ContentView: View {
     
     var body: some View {
         ScrollView {
-            VStack(spacing: 15) {
-                // Timer
-                VStack {
-                    Text(formatTime(timerManager.remainingTime))
-                        .font(.system(size: 32, weight: .bold))
-                        .padding(.bottom, 5)
-                    
-                    HStack {
-                        Button(timerManager.isRunning ? "Pause" : "Start") {
-                            timerManager.isRunning ? timerManager.stop() : timerManager.start()
+            VStack(alignment: .leading, spacing: 12) {
+                Card {
+                    VStack(spacing: 10) {
+                        // Progress ring around time label
+                        let total = timerManager.isRunning ? max(timerManager.focusDuration, timerManager.breakDuration) : max(timerManager.focusDuration, timerManager.breakDuration)
+                        let progress = total > 0 ? 1.0 - Double(timerManager.remainingTime) / Double(total) : 0
+                        HStack(spacing: 12) {
+                            ProgressRing(progress: max(0, min(1, progress)))
+                                .frame(width: 54, height: 54)
+                            VStack(alignment: .leading, spacing: 2) {
+                                Text(formatTime(timerManager.remainingTime))
+                                    .font(.system(size: 28, weight: .bold))
+                                Text(timerManager.isRunning ? "Running" : "Paused")
+                                    .font(.caption)
+                                    .foregroundColor(.secondary)
+                            }
+                            Spacer()
                         }
-                        Button("Reset") {
-                            timerManager.reset()
+                        HStack {
+                            Button(timerManager.isRunning ? "Pause" : "Start") {
+                                timerManager.isRunning ? timerManager.stop() : timerManager.start()
+                            }
+                            .buttonStyle(.borderedProminent)
+                            Button("Reset") {
+                                timerManager.reset()
+                            }
+                            .buttonStyle(.bordered)
                         }
                     }
-                    .buttonStyle(.borderedProminent)
                 }
                 
-                Divider()
+                Card {
+                    SectionHeader(title: "Todo List")
+                    TodoView()
+                }
                 
-                // Todo
-                TodoView()
+                Card {
+                    SectionHeader(title: "Notes")
+                    NotesView()
+                }
                 
-                Divider()
-                
-                // Notes
-                NotesView()
-                
-                Divider()
-                
-                // Settings
-                SettingsView()
+                Card {
+                    SectionHeader(title: "Settings")
+                    SettingsView()
+                }
             }
             .padding()
-            .frame(width: 260)
+            .frame(width: 280)
         }
     }
     
