@@ -61,17 +61,29 @@ The project includes `CapyTimer/capysound.wav`. The app plays this sound at the 
 ### Project Structure
 ```
 CapyTimer/
-  CapyTimerApp.swift         // App entry, environment objects, MenuBarExtra
-  ContentView.swift          // Main layout
-  TimerManager.swift         // Timer logic + notifications + sound
-  TodoManager.swift          // Todo model and actions
-  NotesManager.swift         // Notes state
-  NotificationManager.swift  // Permission + local notification helper
-  CapyTheme.swift            // Reusable styles and UI components
-  NotesView.swift            // Notes UI
-  TodoView.swift             // Todos UI
-  SettingsView.swift         // Settings UI
-  Assets.xcassets            // Colors & app icon
+├── CapyTimerApp.swift                    # Main app entry point
+├── CapyTimer.entitlements               # App entitlements
+├── Core/                                # Business logic and data management
+│   ├── Managers/                        # Manager classes
+│   │   ├── TimerManager.swift          # Timer functionality
+│   │   ├── TodoManager.swift           # Todo list management
+│   │   ├── NotesManager.swift          # Notes management
+│   │   └── NotificationManager.swift   # Notification handling
+│   └── Models/                         # Data models (ready for future expansion)
+├── UI/                                  # User interface components
+│   ├── Views/                          # SwiftUI views
+│   │   ├── ContentView.swift           # Main content view
+│   │   ├── TodoView.swift              # Todo list view
+│   │   ├── NotesView.swift             # Notes view
+│   │   └── SettingsView.swift          # Settings view
+│   ├── Components/                     # Reusable UI components (ready for future expansion)
+│   └── Theme/                          # Design system and styling
+│       └── CapyTheme.swift             # Theme, colors, and UI components
+└── Resources/                          # App resources
+    ├── Images/                         # Image assets
+    │   └── Assets.xcassets/            # App icons and color sets
+    └── Sounds/                         # Audio files
+        └── capysound.wav              # Timer completion sound
 ```
 
 ### Contributing
@@ -83,6 +95,6 @@ PRs welcome. Keep code clear and consistent with existing SwiftUI style. Prefer 
 3. Drag **CapyTimer.app** into your Applications folder.
 
 ### License
-MIT
+[MIT](LICENSE)
 
 
