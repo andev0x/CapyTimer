@@ -94,6 +94,12 @@ PRs welcome. Keep code clear and consistent with existing SwiftUI style. Prefer 
 2. Download the `.dmg` file.
 3. Drag **CapyTimer.app** into your Applications folder.
 
+> How to use it:
+Open the Terminal application.
+    Type `xattr -cr ` (note the trailing space).
+    Drag the application or file you want to modify from Finder into the Terminal window. This will automatically populate the full path of the item.
+    Press Enter to execute the command.
+
 ### License
 [MIT](LICENSE)
 
