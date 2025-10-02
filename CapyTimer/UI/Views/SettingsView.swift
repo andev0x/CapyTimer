@@ -9,8 +9,10 @@ import SwiftUI
 
 struct SettingsView: View {
     @EnvironmentObject var timerManager: TimerManager
+    @EnvironmentObject var updateManager: UpdateManager
     @State private var focusMinutes: String = ""
     @State private var breakMinutes: String = ""
+    @State private var showUpdateSettings = false
     
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
@@ -35,8 +37,26 @@ struct SettingsView: View {
                     .buttonStyle(.bordered)
             }
             .padding(.top, 4)
+            
+            Divider()
+                .padding(.vertical, 8)
+            
+            HStack {
+                Text("Update Settings")
+                    .font(.subheadline)
+                    .fontWeight(.medium)
+                Spacer()
+                Button("Configure") {
+                    showUpdateSettings = true
+                }
+                .buttonStyle(.bordered)
+            }
         }
         .onAppear(perform: load)
+        .sheet(isPresented: $showUpdateSettings) {
+            UpdateSettingsView()
+                .environmentObject(updateManager)
+        }
     }
     
     private func load() {

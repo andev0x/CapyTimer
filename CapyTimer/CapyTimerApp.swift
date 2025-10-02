@@ -12,6 +12,7 @@ struct CapyTimerApp: App {
     @StateObject private var timerManager = TimerManager()
     @StateObject private var todoManager = TodoManager()
     @StateObject private var notesManager = NotesManager()
+    @StateObject private var updateManager = UpdateManager.shared
     
     var body: some Scene {
         MenuBarExtra {
@@ -19,8 +20,15 @@ struct CapyTimerApp: App {
                 .environmentObject(timerManager)
                 .environmentObject(todoManager)
                 .environmentObject(notesManager)
+                .environmentObject(updateManager)
                 .frame(width: 320, height: 420)
                 .padding()
+                .onAppear {
+                    // Check for updates on launch if enabled
+                    if UserDefaults.standard.bool(forKey: "checkForUpdatesOnLaunch") {
+                        updateManager.checkForUpdatesOnLaunch()
+                    }
+                }
         } label: {
             HStack(spacing: 6) {
                 Image(systemName: "timer")
