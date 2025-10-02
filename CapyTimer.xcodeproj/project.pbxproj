@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		0ECD3BBB2E8E00FF00EAEFE1 /* Sparkle in Frameworks */ = {isa = PBXBuildFile; productRef = 0ECD3BBA2E8E00FF00EAEFE1 /* Sparkle */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		0EDC5FEE2E8BA032007C71DE /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -52,6 +56,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0ECD3BBB2E8E00FF00EAEFE1 /* Sparkle in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -112,6 +117,7 @@
 			);
 			name = CapyTimer;
 			packageProductDependencies = (
+				0ECD3BBA2E8E00FF00EAEFE1 /* Sparkle */,
 			);
 			productName = CapyTimer;
 			productReference = 0EDC5FDF2E8BA030007C71DE /* CapyTimer.app */;
@@ -195,6 +201,9 @@
 			);
 			mainGroup = 0EDC5FD62E8BA030007C71DE;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				0ECD3BB92E8E00FF00EAEFE1 /* XCRemoteSwiftPackageReference "Sparkle" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 0EDC5FE02E8BA030007C71DE /* Products */;
 			projectDirPath = "";
@@ -553,6 +562,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		0ECD3BB92E8E00FF00EAEFE1 /* XCRemoteSwiftPackageReference "Sparkle" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/sparkle-project/Sparkle";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.8.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		0ECD3BBA2E8E00FF00EAEFE1 /* Sparkle */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0ECD3BB92E8E00FF00EAEFE1 /* XCRemoteSwiftPackageReference "Sparkle" */;
+			productName = Sparkle;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 0EDC5FD72E8BA030007C71DE /* Project object */;
 }
